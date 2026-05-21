@@ -24,10 +24,10 @@ export default function CertificationDetail() {
 
   if (!cert) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-50">
+      <div className="min-h-screen flex items-center justify-center bg-ds-bg">
         <div className="text-center">
-          <h2 className="text-2xl font-bold mb-4 text-navy-900">Certification Not Found</h2>
-          <Link to="/" className="text-blue-500 hover:underline flex items-center gap-2 justify-center font-medium">
+          <h2 className="text-2xl font-bold mb-4 text-ds-text font-display">Certification Not Found</h2>
+          <Link to="/" className="text-ds-primary hover:underline flex items-center gap-2 justify-center font-medium">
             <FiArrowLeft /> Back to Home
           </Link>
         </div>
@@ -36,12 +36,10 @@ export default function CertificationDetail() {
   }
 
   return (
-    <div className="min-h-screen pt-24 pb-12 px-6 relative bg-slate-50">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-indigo-100/50 rounded-full blur-[120px] pointer-events-none" />
-      
-      <div className="container mx-auto max-w-5xl relative z-10">
-        <Link to="/#certifications" className="inline-flex items-center gap-2 text-slate-500 hover:text-blue-600 transition-colors mb-8 group font-medium">
-          <div className="p-2 bg-white rounded-lg group-hover:bg-blue-50 transition-colors shadow-sm border border-slate-200">
+    <div className="min-h-screen pt-24 pb-12 px-6 relative bg-ds-bg">
+      <div className="container mx-auto max-w-7xl relative z-10">
+        <Link to="/#certifications" className="inline-flex items-center gap-2 text-ds-muted hover:text-ds-primary transition-colors mb-8 group font-medium">
+          <div className="p-2 bg-ds-surface rounded-none group-hover:bg-ds-elevated transition-colors shadow-sm border border-ds-border">
             <FiArrowLeft />
           </div>
           Back to Portfolio
@@ -51,40 +49,39 @@ export default function CertificationDetail() {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
-          className="glass-card bg-white overflow-hidden shadow-xl border-slate-200"
+          className="glass-card overflow-hidden"
         >
-          <div className="p-8 border-b border-slate-100 bg-slate-50/50 flex items-start gap-6">
-            <div className="p-4 bg-blue-50 border border-blue-100 text-blue-500 rounded-2xl hidden sm:block shadow-sm">
+          <div className="p-8 border-b border-ds-border bg-ds-surface flex items-start gap-6">
+            <div className="p-4 bg-ds-primary/10 border border-ds-primary/20 text-ds-primary rounded-none hidden sm:block shadow-sm">
               <Award size={48} />
             </div>
             <div>
-              <div className="inline-block px-3 py-1 mb-3 rounded-full bg-white text-slate-500 text-xs font-bold border border-slate-200 shadow-sm">
+              <div className="inline-block px-3 py-1 mb-3 rounded-none bg-ds-bg text-ds-muted text-xs font-bold border border-ds-border shadow-sm">
                 {cert.date}
               </div>
-              <h1 className="text-3xl md:text-4xl font-bold text-navy-900 mb-2">{cert.title}</h1>
-              <p className="text-xl text-blue-600 font-bold">{cert.issuer}</p>
+              <h1 className="text-3xl md:text-4xl font-bold text-ds-text mb-2 font-display">{cert.title}</h1>
+              <p className="text-xl text-ds-primary font-bold">{cert.issuer}</p>
             </div>
           </div>
 
           <div className="p-8 md:p-10">
-            <h3 className="text-lg font-bold text-navy-900 mb-4">About this Certification</h3>
-            <p className="text-slate-600 font-medium leading-relaxed mb-10 text-lg">
+            <h3 className="text-lg font-bold text-ds-text mb-4 font-display">About this Certification</h3>
+            <p className="text-ds-muted font-medium leading-relaxed mb-10 text-lg">
               {cert.desc}
             </p>
 
             {cert.image ? (
-              <div className="rounded-xl overflow-hidden border border-slate-200 bg-slate-100 shadow-inner relative group h-[400px] md:h-[600px] flex items-center justify-center">
-                {/* CSS Crop Technique */}
+              <div className="rounded-none overflow-hidden border border-ds-border bg-ds-bg shadow-inner relative group h-auto min-h-[400px] md:min-h-[600px] p-4 flex items-center justify-center">
                 <img 
                   src={cert.image} 
                   alt={cert.title} 
-                  className="w-full h-full object-cover transform scale-[1.3] md:scale-[1.4] transition-transform duration-700 hover:scale-[1.45]"
+                  className="max-w-full max-h-full object-contain transition-transform duration-700 hover:scale-[1.02] shadow-sm rounded-none"
                 />
               </div>
             ) : (
-              <div className="rounded-xl border border-dashed border-slate-300 bg-slate-50 p-12 text-center">
-                <Award size={48} className="mx-auto text-slate-300 mb-4" />
-                <p className="text-slate-500 font-medium">Digital certificate image not available.</p>
+              <div className="rounded-none border border-dashed border-ds-border bg-ds-bg p-12 text-center">
+                <Award size={48} className="mx-auto text-ds-muted mb-4" />
+                <p className="text-ds-muted font-medium">Digital certificate image not available.</p>
               </div>
             )}
           </div>

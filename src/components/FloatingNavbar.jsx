@@ -63,13 +63,13 @@ export default function FloatingNavbar() {
     <AnimatePresence>
       {isVisible && (
         <motion.nav
-          initial={{ y: 100, opacity: 0 }}
+          initial={{ y: -100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          exit={{ y: 100, opacity: 0 }}
+          exit={{ y: -100, opacity: 0 }}
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
-          className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50"
+          className="fixed top-6 left-1/2 -translate-x-1/2 z-50"
         >
-          <div className="bg-navy-900/90 backdrop-blur-xl px-2 py-2 rounded-2xl flex items-center gap-1 sm:gap-2 shadow-2xl border border-navy-700/50">
+          <div className="bg-ds-surface/90 backdrop-blur-xl px-2 py-2 rounded-2xl flex items-center gap-1 sm:gap-2 shadow-[0_10px_30px_rgba(167,139,250,0.15)] border border-ds-border">
             {navItems.map((item) => {
               const isActive = activeItem === item.label && isHomePage;
               
@@ -81,8 +81,8 @@ export default function FloatingNavbar() {
                       onClick={(e) => handleNavClick(e, item)}
                       className={`relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-xl transition-all duration-300 z-10
                         ${isActive 
-                          ? 'text-white bg-blue-600 shadow-md' 
-                          : 'text-slate-400 hover:text-white hover:bg-navy-800'
+                          ? 'text-ds-bg bg-ds-primary shadow-[0_0_15px_rgba(167,139,250,0.5)]' 
+                          : 'text-ds-muted hover:text-ds-text hover:bg-ds-elevated'
                         }`}
                     >
                       {item.icon}
@@ -90,14 +90,14 @@ export default function FloatingNavbar() {
                   ) : (
                     <Link
                       to={item.href}
-                      className="relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-xl transition-all duration-300 z-10 text-slate-400 hover:text-white hover:bg-navy-800"
+                      className="relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-xl transition-all duration-300 z-10 text-ds-muted hover:text-ds-text hover:bg-ds-elevated"
                     >
                       {item.icon}
                     </Link>
                   )}
                   
                   {/* Tooltip */}
-                  <div className="absolute -top-10 left-1/2 -translate-x-1/2 px-3 py-1 bg-white text-navy-900 text-xs font-bold rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none shadow-xl">
+                  <div className="absolute top-[120%] left-1/2 -translate-x-1/2 px-3 py-1 bg-ds-surface text-ds-text border border-ds-border text-xs font-bold rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none shadow-xl tracking-[0.1em] font-display uppercase">
                     {item.label}
                   </div>
                 </div>

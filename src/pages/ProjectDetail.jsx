@@ -47,10 +47,10 @@ export default function ProjectDetail() {
 
   if (!project) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-50">
+      <div className="min-h-screen flex items-center justify-center bg-ds-bg">
         <div className="text-center">
-          <h2 className="text-2xl font-bold mb-4 text-navy-900">Project Not Found</h2>
-          <Link to="/" className="text-blue-500 hover:underline flex items-center gap-2 justify-center font-medium">
+          <h2 className="text-2xl font-bold mb-4 text-ds-text font-display">Project Not Found</h2>
+          <Link to="/" className="text-ds-primary hover:underline flex items-center gap-2 justify-center font-medium">
             <FiArrowLeft /> Back to Home
           </Link>
         </div>
@@ -59,12 +59,11 @@ export default function ProjectDetail() {
   }
 
   return (
-    <div className="min-h-screen pt-24 pb-12 px-6 relative bg-slate-50">
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-100/50 rounded-full blur-[150px] pointer-events-none" />
+    <div className="min-h-screen pt-24 pb-12 px-6 relative bg-ds-bg">
       
-      <div className="container mx-auto max-w-4xl relative z-10">
-        <Link to="/#projects" className="inline-flex items-center gap-2 text-slate-500 hover:text-blue-600 transition-colors mb-8 group font-medium">
-          <div className="p-2 bg-white rounded-lg shadow-sm group-hover:bg-blue-50 transition-colors border border-slate-200">
+      <div className="container mx-auto max-w-7xl relative z-10">
+        <Link to="/#projects" className="inline-flex items-center gap-2 text-ds-muted hover:text-ds-primary transition-colors mb-8 group font-medium">
+          <div className="p-2 bg-ds-surface rounded-none shadow-sm group-hover:bg-ds-elevated transition-colors border border-ds-border">
             <FiArrowLeft />
           </div>
           Back to Portfolio
@@ -74,63 +73,63 @@ export default function ProjectDetail() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="glass-card bg-white overflow-hidden shadow-xl border-slate-200"
+          className="glass-card overflow-hidden"
         >
           {/* Header Image */}
-          <div className="w-full h-[300px] md:h-[450px] relative overflow-hidden bg-slate-100 border-b border-slate-100">
+          <div className="w-full h-[300px] md:h-[450px] relative overflow-hidden bg-ds-surface border-b border-ds-border">
             <img 
               src={project.image} 
               alt={project.title} 
               className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-white via-white/20 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-ds-elevated via-ds-elevated/50 to-transparent" />
           </div>
 
           <div className="p-8 md:p-12 -mt-20 relative z-10">
             <div className="flex flex-wrap items-center gap-4 mb-6">
-              <span className="px-4 py-2 bg-blue-50 text-blue-600 rounded-lg text-sm font-bold border border-blue-100 flex items-center gap-2 shadow-sm">
+              <span className="ds-badge flex items-center gap-2 shadow-sm border-none bg-ds-primary/10">
                 <FiCalendar /> {project.date}
               </span>
               <div className="flex gap-2">
                 {project.demoUrl && (
-                  <a href={project.demoUrl} target="_blank" rel="noreferrer" className="p-2 bg-white text-navy-800 hover:text-blue-600 rounded-lg transition-colors border border-slate-200 shadow-sm flex items-center gap-2 text-sm font-bold">
+                  <a href={project.demoUrl} target="_blank" rel="noreferrer" className="p-2 bg-ds-surface text-ds-primary hover:bg-ds-primary hover:text-ds-bg transition-colors border border-ds-border shadow-sm flex items-center gap-2 text-sm font-bold">
                     <FiExternalLink /> Live Demo
                   </a>
                 )}
                 {project.githubUrl && (
-                  <a href={project.githubUrl} target="_blank" rel="noreferrer" className="p-2 bg-navy-800 text-white hover:bg-navy-900 rounded-lg transition-colors shadow-sm flex items-center gap-2 text-sm font-bold">
+                  <a href={project.githubUrl} target="_blank" rel="noreferrer" className="p-2 bg-ds-surface text-ds-primary hover:bg-ds-primary hover:text-ds-bg transition-colors border border-ds-border shadow-sm flex items-center gap-2 text-sm font-bold">
                     <FiGithub /> Source Code
                   </a>
                 )}
               </div>
             </div>
 
-            <h1 className="text-4xl md:text-5xl font-bold text-navy-900 mb-6">{project.title}</h1>
+            <h1 className="text-4xl md:text-5xl font-bold text-ds-text mb-6 font-display">{project.title}</h1>
             
             <div className="flex flex-wrap gap-2 mb-10">
               {project.tags.map((tag, idx) => (
-                <span key={idx} className="px-3 py-1 bg-slate-100 text-slate-600 rounded-lg text-sm font-bold border border-slate-200">
+                <span key={idx} className="ds-badge">
                   <FiCode className="inline mr-1" />{tag}
                 </span>
               ))}
             </div>
 
-            <div className="space-y-10 text-slate-600 text-lg leading-relaxed font-medium">
+            <div className="space-y-10 text-ds-muted text-lg leading-relaxed font-medium">
               <section>
-                <h3 className="text-2xl font-bold text-navy-900 mb-4 border-b border-slate-200 pb-2">Overview</h3>
+                <h3 className="text-2xl font-bold text-ds-text mb-4 border-b border-ds-border pb-2 font-display">Overview</h3>
                 <p>{project.description}</p>
               </section>
 
               {project.challenges && (
                 <section>
-                  <h3 className="text-2xl font-bold text-navy-900 mb-4 border-b border-slate-200 pb-2">Challenges Faced</h3>
+                  <h3 className="text-2xl font-bold text-ds-text mb-4 border-b border-ds-border pb-2 font-display">Challenges Faced</h3>
                   <p>{project.challenges}</p>
                 </section>
               )}
 
               {project.learnings && (
                 <section>
-                  <h3 className="text-2xl font-bold text-navy-900 mb-4 border-b border-slate-200 pb-2">Key Learnings</h3>
+                  <h3 className="text-2xl font-bold text-ds-text mb-4 border-b border-ds-border pb-2 font-display">Key Learnings</h3>
                   <p>{project.learnings}</p>
                 </section>
               )}

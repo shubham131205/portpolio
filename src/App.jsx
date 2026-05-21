@@ -15,22 +15,21 @@ import ScrollToTop from './components/ScrollToTop';
 
 function Background() {
   return (
-    <div className="fixed inset-0 z-[-1] overflow-hidden pointer-events-none bg-slate-200">
-      <div className="absolute inset-0 bg-grid-pattern opacity-40" />
+    <div className="fixed inset-0 z-[50] overflow-hidden pointer-events-none mix-blend-screen">
       <motion.div 
-        animate={{ y: [0, -30, 0], opacity: [0.4, 0.6, 0.4] }} 
-        transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-[10%] left-[10%] w-[600px] h-[600px] bg-blue-400/20 rounded-full blur-[120px]" 
-      />
-      <motion.div 
-        animate={{ y: [0, 30, 0], opacity: [0.3, 0.5, 0.3] }} 
-        transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute bottom-[20%] right-[5%] w-[700px] h-[700px] bg-indigo-400/15 rounded-full blur-[150px]" 
-      />
-      <motion.div 
-        animate={{ x: [0, 40, 0], opacity: [0.3, 0.6, 0.3] }} 
+        animate={{ y: [0, -30, 0] }} 
         transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-[40%] left-[40%] w-[500px] h-[500px] bg-sky-300/20 rounded-full blur-[100px]" 
+        className="absolute top-0 right-[10%] w-[500px] h-[500px] bg-[#e879f9] rounded-full blur-[120px] opacity-10" 
+      />
+      <motion.div 
+        animate={{ y: [0, 30, 0] }} 
+        transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-1/2 -translate-y-1/2 left-[-10%] w-[600px] h-[600px] bg-[#a78bfa] rounded-full blur-[150px] opacity-[0.15]" 
+      />
+      <motion.div 
+        animate={{ y: [-15, 15, -15] }} 
+        transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute bottom-0 right-[5%] w-[400px] h-[400px] bg-[#7c3aed] rounded-full blur-[130px] opacity-10" 
       />
     </div>
   );
@@ -38,8 +37,8 @@ function Background() {
 
 function Footer() {
   return (
-    <footer className="py-8 text-center border-t border-slate-200 mt-20 relative z-10 bg-white/50 backdrop-blur-md">
-      <p className="text-navy-700 font-medium">
+    <footer className="py-8 text-center border-t border-ds-border mt-20 relative z-10 bg-ds-bg">
+      <p className="text-ds-muted font-medium">
         Made with hardwork and dedication by Shubham Dash
       </p>
     </footer>
@@ -66,7 +65,7 @@ function Home() {
 
 function App() {
   return (
-    <div className="min-h-screen bg-transparent text-navy-800 font-sans selection:bg-blue-200">
+    <div className="min-h-screen bg-transparent">
       <Background />
       <ScrollToTop />
       <Routes>

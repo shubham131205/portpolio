@@ -19,22 +19,19 @@ const certifications = [
 
 export default function Certifications() {
   return (
-    <section id="certifications" className="py-24 relative overflow-hidden bg-white">
-      <div className="absolute left-[20%] top-[30%] w-[500px] h-[500px] bg-blue-100/50 rounded-full blur-[120px] pointer-events-none" />
-
-      <div className="container mx-auto px-6 relative z-10">
+    <section id="certifications" className="py-[90px] relative overflow-hidden bg-[#1a1528]">
+      <div className="container mx-auto px-6 relative z-10 max-w-7xl">
         <motion.div 
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, amount: 0.15 }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="mb-12"
         >
-          <h2 className="text-3xl md:text-5xl font-bold mb-4 text-navy-900">Certifications & <span className="text-blue-500">Badges</span></h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-blue-400 to-indigo-500 mx-auto rounded-full"></div>
+          <h2 className="section-title">Certifications & Badges</h2>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-6 w-full">
           {certifications.map((cert, index) => (
             <CertCard key={cert.id} cert={cert} index={index} />
           ))}
@@ -45,39 +42,31 @@ export default function Certifications() {
 }
 
 function CertCard({ cert, index }) {
-  const colorMap = {
-    blue: "text-blue-600 bg-blue-50 border-blue-200 group-hover:border-blue-400",
-    indigo: "text-indigo-600 bg-indigo-50 border-indigo-200 group-hover:border-indigo-400",
-    sky: "text-sky-600 bg-sky-50 border-sky-200 group-hover:border-sky-400"
-  };
-
-  const bgStyle = colorMap[cert.color];
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
+      viewport={{ once: true, amount: 0.15 }}
       transition={{ duration: 0.4, delay: index * 0.05 }}
     >
       <Link to={`/certification/${cert.id}`} className="block h-full">
-        <div className="glass-card bg-white p-6 h-full flex flex-col group relative overflow-hidden shadow-sm hover:shadow-lg border-slate-200 transition-all duration-300 hover:-translate-y-2">
+        <div className="glass-card p-6 h-full flex flex-col group relative overflow-hidden transition-all duration-300">
           
           <div className="flex items-start gap-4 relative z-10 mb-4">
-            <div className={`p-3 rounded-xl flex-shrink-0 transition-colors border ${bgStyle}`}>
+            <div className="p-3 rounded-none flex-shrink-0 transition-colors border bg-ds-primary/10 text-ds-primary border-ds-primary/20">
               <Award size={24} />
             </div>
             <div>
-              <div className="text-xs font-bold text-slate-400 mb-1">{cert.date}</div>
-              <h3 className="text-lg font-bold text-navy-900 group-hover:text-blue-600 transition-colors line-clamp-2 leading-tight">
+              <div className="text-xs font-bold text-ds-muted mb-1">{cert.date}</div>
+              <h3 className="text-lg font-bold text-ds-text group-hover:text-ds-primary transition-colors line-clamp-2 leading-tight font-display">
                 {cert.title}
               </h3>
             </div>
           </div>
           
-          <div className="mt-auto pt-4 border-t border-slate-100 flex items-center justify-between relative z-10">
-            <span className="text-sm font-bold text-slate-500">{cert.issuer}</span>
-            <span className={`flex items-center gap-1 text-sm font-bold opacity-0 group-hover:opacity-100 transition-opacity -translate-x-4 group-hover:translate-x-0 duration-300 ${bgStyle.split(' ')[0]}`}>
+          <div className="mt-auto pt-4 border-t border-ds-border flex items-center justify-between relative z-10">
+            <span className="text-sm font-bold text-ds-muted">{cert.issuer}</span>
+            <span className="flex items-center gap-1 text-sm font-bold opacity-0 group-hover:opacity-100 transition-all -translate-x-4 group-hover:translate-x-0 duration-300 text-ds-primary">
               View <ArrowRight size={16} />
             </span>
           </div>

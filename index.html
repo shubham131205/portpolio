@@ -4,9 +4,338 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300..900&family=Syne:wght@400..800&display=swap" rel="stylesheet">
     <title>port</title>
   </head>
   <body>
+    <!-- ELEGANT INTRO START -->
+    <div id="elegant-intro" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #0f0f14; z-index: 999999; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 1.5s ease-in-out, transform 1.5s ease-in-out;">
+      <style>
+        @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700&family=Inter:wght@400&display=swap');
+        
+        #elegant-intro * {
+          box-sizing: border-box;
+        }
+        
+        #star-canvas {
+          position: absolute;
+          top: 0; left: 0; width: 100%; height: 100%;
+          z-index: 10;
+          transition: transform 0.8s ease, opacity 0.8s ease;
+        }
+        
+        .intro-content {
+          position: relative;
+          z-index: 20;
+          text-align: center;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          height: 100%;
+          transform: scale(0.95);
+          transition: transform 5s ease-out;
+        }
+        
+        .intro-content.scale-up {
+          transform: scale(1.05);
+        }
+        
+        .signal-line-container {
+          position: absolute;
+          top: calc(50% - 50px);
+          left: 0;
+          width: 100%;
+          height: 1px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 15;
+        }
+
+        .signal-line {
+          width: 0;
+          height: 1px;
+          background: #a78bfa;
+          box-shadow: 0 0 15px #a78bfa;
+          transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s ease;
+        }
+
+        .signal-dot {
+          position: absolute;
+          width: 6px;
+          height: 6px;
+          background: #e879f9;
+          border-radius: 50%;
+          box-shadow: 0 0 20px #e879f9, 0 0 40px #e879f9;
+          opacity: 0;
+          transform: scale(0);
+          transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .name-container {
+          display: flex;
+          margin-bottom: 8px;
+        }
+
+        .name-letter {
+          font-family: 'Syne', sans-serif;
+          font-weight: 700;
+          color: #e2e0f0;
+          font-size: clamp(36px, 8vw, 72px);
+          line-height: 1;
+          opacity: 0;
+          display: inline-block;
+          transition: opacity 1s cubic-bezier(0.25, 1, 0.5, 1), transform 1s cubic-bezier(0.25, 1, 0.5, 1), text-shadow 0.6s ease;
+        }
+        
+        .name-container.pop-up .name-letter {
+          text-shadow: 0 0 20px #a78bfa, 0 0 40px #a78bfa;
+        }
+        
+        .subtitle-text {
+          font-family: 'Inter', sans-serif;
+          font-weight: 400;
+          color: #c4c1d9;
+          font-size: 13px;
+          letter-spacing: 0.25em;
+          text-transform: uppercase;
+        }
+
+        .subtitle-word {
+          display: inline-block;
+          opacity: 0;
+          transition: opacity 1s cubic-bezier(0.25, 1, 0.5, 1), transform 1s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        
+        .skip-btn {
+          position: absolute;
+          bottom: 30px;
+          right: 30px;
+          background: transparent;
+          border: none;
+          color: #2a2640;
+          font-family: 'Inter', sans-serif;
+          font-size: 11px;
+          cursor: pointer;
+          z-index: 30;
+          opacity: 0;
+          transition: opacity 0.4s ease;
+        }
+        
+        #elegant-intro.fade-out {
+          opacity: 0 !important;
+          transform: scale(1.1);
+          pointer-events: none;
+        }
+      </style>
+
+      <canvas id="star-canvas"></canvas>
+      
+      <div class="intro-content">
+        <div class="signal-line-container">
+          <div class="signal-line" id="intro-line"></div>
+          <div class="signal-dot" id="intro-dot"></div>
+        </div>
+        
+        <div class="name-container" id="intro-name"></div>
+        <div class="subtitle-text" id="intro-subtitle"></div>
+      </div>
+      
+      <button class="skip-btn" id="intro-skip" onclick="skipIntro()">skip</button>
+
+      <script>
+        (function() {
+          const intro = document.getElementById('elegant-intro');
+          const canvas = document.getElementById('star-canvas');
+          const ctx = canvas.getContext('2d');
+          const nameContainer = document.getElementById('intro-name');
+          const introContent = document.querySelector('.intro-content');
+          const lineEl = document.getElementById('intro-line');
+          const dotEl = document.getElementById('intro-dot');
+          const subtitleEl = document.getElementById('intro-subtitle');
+          const skipBtn = document.getElementById('intro-skip');
+          
+          let width, height;
+          let stars = [];
+          let skipped = false;
+          let animationFrameId;
+          
+          const nameStr = "SHUBHAM DASH";
+          nameStr.split('').forEach((char, index) => {
+            const span = document.createElement('span');
+            span.className = 'name-letter';
+            span.innerHTML = char === ' ' ? '&nbsp;' : char;
+            
+            const rx = (Math.random() - 0.5) * window.innerWidth * 0.8;
+            const ry = (Math.random() - 0.5) * window.innerHeight * 0.8;
+            span.style.transform = `translate(${rx}px, ${ry}px) scale(${Math.random() * 1.5 + 0.5})`;
+            
+            nameContainer.appendChild(span);
+          });
+          const letters = document.querySelectorAll('.name-letter');
+          
+          const subtitleStr = "BTech Computer Science  &middot;  Developer  &middot;  Builder";
+          subtitleStr.split('  ').forEach(word => {
+            if (!word) return;
+            const span = document.createElement('span');
+            span.className = 'subtitle-word';
+            span.innerHTML = word;
+            
+            const rx = (Math.random() - 0.5) * window.innerWidth * 0.5;
+            const ry = (Math.random() - 0.5) * window.innerHeight * 0.5;
+            span.style.transform = `translate(${rx}px, ${ry}px) scale(${Math.random() * 1.5 + 0.5})`;
+            
+            subtitleEl.appendChild(span);
+            subtitleEl.appendChild(document.createTextNode('  '));
+          });
+          const subtitleWords = document.querySelectorAll('.subtitle-word');
+          
+          function initCanvas() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+            
+            stars = [];
+            const numStars = Math.floor(Math.random() * 41) + 80;
+            for(let i=0; i<numStars; i++) {
+              stars.push({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                size: Math.random() * 2 + 0.5,
+                opacity: Math.random(),
+                speed: (Math.random() * 0.03) + 0.01,
+                dir: Math.random() > 0.5 ? 1 : -1
+              });
+            }
+          }
+          
+          function animateStars() {
+            if (skipped) return;
+            ctx.clearRect(0, 0, width, height);
+            
+            stars.forEach(star => {
+              star.opacity += star.speed * star.dir;
+              if (star.opacity > 1) { star.opacity = 1; star.dir = -1; }
+              if (star.opacity < 0.2) { star.opacity = 0.2; star.dir = 1; }
+              
+              ctx.beginPath();
+              ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
+              ctx.shadowBlur = 10;
+              ctx.shadowColor = 'rgba(167, 139, 250, 0.8)';
+              ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+              ctx.fill();
+            });
+            animationFrameId = requestAnimationFrame(animateStars);
+          }
+          
+          window.skipIntro = function() {
+            if (skipped) return;
+            skipped = true;
+            cancelAnimationFrame(animationFrameId);
+            intro.classList.add('fade-out');
+            setTimeout(() => { intro.remove(); }, 1500);
+          }
+          
+          window.addEventListener('resize', () => {
+            if(!skipped) initCanvas();
+          });
+          
+          initCanvas();
+          
+          // Phase 1: Space (1s)
+          canvas.style.opacity = '0';
+          setTimeout(() => { 
+            canvas.style.opacity = '1'; 
+            introContent.classList.add('scale-up');
+            animateStars(); 
+          }, 100);
+          
+          // Phase 2: Signal (1.5s total)
+          setTimeout(() => {
+            if (skipped) return;
+            lineEl.style.width = '100%';
+            skipBtn.style.opacity = '1';
+          }, 1000);
+          
+          setTimeout(() => {
+            if (skipped) return;
+            dotEl.style.opacity = '1';
+            dotEl.style.transform = 'scale(1)';
+            setTimeout(() => {
+              if (skipped) return;
+              dotEl.style.opacity = '0';
+              dotEl.style.transform = 'scale(2)';
+              lineEl.style.opacity = '0.2';
+            }, 150);
+          }, 1800);
+          
+          // Phase 3: Name (fast assembly)
+          setTimeout(() => {
+            if (skipped) return;
+            letters.forEach((letter, i) => {
+              setTimeout(() => {
+                if (skipped) return;
+                letter.style.opacity = '1';
+                letter.style.transform = 'translate(0px, 0px) scale(1)';
+              }, i * 40);
+            });
+            setTimeout(() => {
+              if (skipped) return;
+              subtitleWords.forEach((word, i) => {
+                setTimeout(() => {
+                  if (skipped) return;
+                  word.style.opacity = '1';
+                  word.style.transform = 'translate(0px, 0px) scale(1)';
+                }, i * 40);
+              });
+              
+              // Pop up highlight after assembly
+              setTimeout(() => {
+                if (!skipped) nameContainer.classList.add('pop-up');
+              }, 800);
+              
+            }, letters.length * 40 + 100);
+          }, 2200);
+          
+          // Phase 4: Breathe
+          setTimeout(() => {
+            if (skipped) return;
+            lineEl.style.opacity = '0.35';
+            setTimeout(() => { if (!skipped) lineEl.style.opacity = '0.2'; }, 400);
+          }, 5800);
+          
+          // Phase 5: Dissolve
+          setTimeout(() => {
+            if (skipped) return;
+            canvas.style.transform = 'scale(0.95)';
+            canvas.style.opacity = '0';
+            
+            letters.forEach(letter => {
+              letter.style.transform = 'translateY(-20px) scale(0.9)';
+              letter.style.opacity = '0';
+            });
+            
+            subtitleWords.forEach(word => {
+              word.style.transform = 'translateY(-20px) scale(0.9)';
+              word.style.opacity = '0';
+            });
+            
+            lineEl.style.opacity = '0';
+          }, 6600);
+          
+          setTimeout(() => {
+            skipIntro();
+          }, 7200);
+          
+        })();
+      </script>
+    </div>
+    <!-- ELEGANT INTRO END -->
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

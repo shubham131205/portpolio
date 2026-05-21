@@ -20,40 +20,37 @@ export default function Contact() {
     e.preventDefault();
     const subject = `Portfolio Contact from ${formData.name}`;
     const body = `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`;
-    const mailtoLink = `mailto:dashlaxmirani@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    window.location.href = mailtoLink;
+    const gmailLink = `https://mail.google.com/mail/?view=cm&fs=1&to=dashlaxmirani@gmail.com&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.open(gmailLink, '_blank');
   };
 
   return (
-    <section id="contact" className="py-24 relative overflow-hidden bg-white">
-      <div className="absolute right-[20%] top-[20%] w-[400px] h-[400px] bg-blue-100/50 rounded-full blur-[100px] pointer-events-none" />
-      
-      <div className="container mx-auto px-6 relative z-10 max-w-4xl">
+    <section id="contact" className="py-[90px] relative overflow-hidden bg-ds-bg">
+      <div className="container mx-auto px-6 relative z-10 max-w-7xl">
         <motion.div 
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, amount: 0.15 }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="mb-12"
         >
-          <h2 className="text-3xl md:text-5xl font-bold mb-4 text-navy-900">Let's <span className="text-blue-500">Connect</span></h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-blue-400 to-indigo-500 mx-auto rounded-full"></div>
-          <p className="text-slate-500 mt-6 max-w-lg mx-auto font-medium text-lg">
+          <h2 className="section-title">Let's Connect</h2>
+          <p className="text-ds-muted mt-6 max-w-lg font-medium text-lg pl-4 border-l-2 border-ds-primary/20">
             Whether you have a project in mind, an opportunity, or just want to say hi, my inbox is always open.
           </p>
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, amount: 0.15 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          <form onSubmit={handleSubmit} className="glass-card bg-white p-8 md:p-10 shadow-xl border border-slate-200">
+          <form onSubmit={handleSubmit} className="glass-card p-8 md:p-10 transition-all duration-300">
             <div className="grid md:grid-cols-2 gap-6 mb-6">
               
               <div className="relative group">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-blue-500 transition-colors">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-ds-muted group-focus-within:text-ds-primary transition-colors">
                   <FiUser size={20} />
                 </div>
                 <input 
@@ -63,12 +60,12 @@ export default function Contact() {
                   onChange={handleChange}
                   placeholder="Your Name" 
                   required
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl py-4 pl-12 pr-4 text-navy-900 placeholder:text-slate-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all font-medium shadow-sm"
+                  className="w-full bg-ds-surface border border-ds-border rounded-none py-4 pl-12 pr-4 text-ds-text placeholder:text-ds-muted focus:outline-none focus:border-ds-primary focus:ring-1 focus:ring-ds-primary transition-all font-medium shadow-sm"
                 />
               </div>
 
               <div className="relative group">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-blue-500 transition-colors">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-ds-muted group-focus-within:text-ds-primary transition-colors">
                   <FiMail size={20} />
                 </div>
                 <input 
@@ -78,14 +75,14 @@ export default function Contact() {
                   onChange={handleChange}
                   placeholder="Your Email" 
                   required
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl py-4 pl-12 pr-4 text-navy-900 placeholder:text-slate-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all font-medium shadow-sm"
+                  className="w-full bg-ds-surface border border-ds-border rounded-none py-4 pl-12 pr-4 text-ds-text placeholder:text-ds-muted focus:outline-none focus:border-ds-primary focus:ring-1 focus:ring-ds-primary transition-all font-medium shadow-sm"
                 />
               </div>
 
             </div>
 
             <div className="relative group mb-8">
-              <div className="absolute top-4 left-0 pl-4 pointer-events-none text-slate-400 group-focus-within:text-blue-500 transition-colors">
+              <div className="absolute top-4 left-0 pl-4 pointer-events-none text-ds-muted group-focus-within:text-ds-primary transition-colors">
                 <FiMessageSquare size={20} />
               </div>
               <textarea 
@@ -95,7 +92,7 @@ export default function Contact() {
                 placeholder="Your Message..." 
                 rows="5"
                 required
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl py-4 pl-12 pr-4 text-navy-900 placeholder:text-slate-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all resize-none font-medium shadow-sm"
+                className="w-full bg-ds-surface border border-ds-border rounded-none py-4 pl-12 pr-4 text-ds-text placeholder:text-ds-muted focus:outline-none focus:border-ds-primary focus:ring-1 focus:ring-ds-primary transition-all resize-none font-medium shadow-sm"
               ></textarea>
             </div>
 
@@ -103,7 +100,7 @@ export default function Contact() {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               type="submit"
-              className="w-full py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold flex items-center justify-center gap-2 transition-all shadow-md group"
+              className="ds-btn w-full flex items-center justify-center gap-2 shadow-md group"
             >
               Send Message <FiSend className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
             </motion.button>
